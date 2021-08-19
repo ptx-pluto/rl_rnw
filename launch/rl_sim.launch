@@ -1,0 +1,10 @@
+<launch>
+
+    <node name="rviz" pkg="rviz" type="rviz" output="log" args="-d $(find rl_rnw)/config/rl.rviz" />
+
+    <node pkg="rl_rnw" type="odom2tf_node" name="FLU_tf" output="screen">
+        <remap from="~odom" to="/rl_agent/odom"/>
+        <param name="name" value="rl_agent_odom" />
+    </node>
+
+</launch>
