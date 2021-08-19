@@ -7,7 +7,13 @@ project(rl_rnw)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+        tf
+        roscpp
+        sensor_msgs
+        nav_msgs
+        std_msgs
+        )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -112,8 +118,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
-# ${catkin_INCLUDE_DIRS}
+include
+${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -145,6 +151,13 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+set(RNW_NODES odom2tf_node)
+
+FOREACH(NODE ${RNW_NODES})
+    add_executable(${NODE} nodes/${NODE}.cpp)
+    target_link_libraries(${NODE} ${catkin_LIBRARIES})
+ENDFOREACH()
 
 #############
 ## Install ##
